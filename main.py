@@ -737,6 +737,10 @@ def castling(rows, cols):
 # Marks where the player can castle.
 def mark_castling():
 
+    # Returns if the king is in check as they cannot castle.
+    if chosen_colour == Color['in_check']:
+        return
+
     if is_white(chosenRow, chosenCol):
 
         # Checks castling with A1 rook.
@@ -751,6 +755,7 @@ def mark_castling():
                 if will_not_check(7, 6):
                     Board[7][6].piece.image = castleCircle
     else:
+
         # Checks castling with A8 rook.
         if not (Board[0][0].piece.moved or Board[0][4].piece.moved or is_occupied(0, 1) or is_occupied(0, 2) or is_occupied(0, 3)):
             if Board[0][0].piece.piece == 'r' and Board[0][4].piece.piece == 'k':
@@ -1153,6 +1158,13 @@ def move_piece(rows, cols):
         choosing_piece = True
 
         reset_background()
+        in_check()
+
+    # Selects the user's new piece if they clicked on another one of their pieces.
+    elif Board[rows][cols].piece.team == Board[chosenRow][chosenCol].piece.team:
+        Board[rows][cols].bgn_colour = chosen_colour
+        reset_background()
+        choose_piece(rows, cols)
 
     # If the user is doing an en passant.
     if Board[rows][cols].piece.image is passantCircle:
@@ -1187,7 +1199,8 @@ def move_piece(rows, cols):
     # Ensures that after showing the promote pawn options, we aren't checking if the king is in check.
     if not promoting_pawn:
         # Checks if the move made the king go into check.
-        in_check()
+        if not (chosen_colour == Color['in_check'] and Board[chosenRow][chosenCol].piece == 'k'):
+            in_check()
 
 
 # Called whenever a square is clicked and forms the basic logic of the game.
