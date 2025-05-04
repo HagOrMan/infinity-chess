@@ -1,7 +1,24 @@
+import os
 import pygame
 import sys
 
 pygame.init()
+
+# paths for different assets
+can_go_image = os.path.join("assets", "CanGoCircle.png")
+empty_square_image = os.path.join("assets", "EmptySquare.png")
+black_rook_image = os.path.join("assets", "b_rook.png")
+white_rook_image = os.path.join("assets", "w_rook.png")
+black_knight_image = os.path.join("assets", "b_knight.png")
+white_knight_image = os.path.join("assets", "w_knight.png")
+black_bishop_image = os.path.join("assets", "b_bishop.png")
+white_bishop_image = os.path.join("assets", "w_bishop.png")
+black_queen_image = os.path.join("assets", "b_queen.png")
+white_queen_image = os.path.join("assets", "w_queen.png")
+black_king_image = os.path.join("assets", "b_king.png")
+white_king_image = os.path.join("assets", "w_king.png")
+black_pawn_image = os.path.join("assets", "b_pawn.png")
+white_pawn_image = os.path.join("assets", "w_pawn.png")
 
 # Colours for different aspects of the game.
 Color = {
@@ -39,10 +56,10 @@ choosing_piece = True
 wPawnJustMoved, bPawnJustMoved = [False for r in range(8)], [False for r in range(8)]
 
 # Images needed for the game.
-goCircle = pygame.image.load('CanGoCircle.png')
-passantCircle = pygame.image.load('CanGoCircle.png')
-castleCircle = pygame.image.load('CanGoCircle.png')
-emptySquare = pygame.image.load('EmptySquare.png')
+goCircle = pygame.image.load(can_go_image)
+passantCircle = pygame.image.load(can_go_image)
+castleCircle = pygame.image.load(can_go_image)
+emptySquare = pygame.image.load(empty_square_image)
 
 # Variables for the chosen square and resetting squares to their original colours.
 chosenRow, chosenCol = 0, 0
@@ -53,7 +70,7 @@ check_back_colour = Color['light_blue']
 
 # The Piece class contains all the knowledge about a specific piece on the board.
 class Piece:
-    def __init__(self, team='None', piece='None', image='EmptySquare.png', moved=False):
+    def __init__(self, team='None', piece='None', image=empty_square_image, moved=False):
         self.team = team
         self.piece = piece
         self.image = pygame.image.load(image)
@@ -81,83 +98,83 @@ class Square:
 
 
 # Variable representing whichever piece was last chosen.
-chosenPiece = Piece('w', 'r', 'w_rook.png', False)
+chosenPiece = Piece('w', 'r', white_rook_image, False)
 
 # All the squares on the board.
-A8 = Square(0, 0, Color["light_blue"], False, Piece('b', 'r', 'b_rook.png'), False, 'EmptySquare.png')
-B8 = Square(0, 1, Color["dark_blue"], False, Piece('b', 'n', 'b_knight.png'), False, 'EmptySquare.png')
-C8 = Square(0, 2, Color["light_blue"], False, Piece('b', 'b', 'b_bishop.png'), False, 'EmptySquare.png')
-D8 = Square(0, 3, Color["dark_blue"], False, Piece('b', 'q', 'b_queen.png'), False, 'EmptySquare.png')
-E8 = Square(0, 4, Color["light_blue"], False, Piece('b', 'k', 'b_king.png'), False, 'EmptySquare.png')
-F8 = Square(0, 5, Color["dark_blue"], False, Piece('b', 'b', 'b_bishop.png'), False, 'EmptySquare.png')
-G8 = Square(0, 6, Color["light_blue"], False, Piece('b', 'n', 'b_knight.png'), False, 'EmptySquare.png')
-H8 = Square(0, 7, Color["dark_blue"], False, Piece('b', 'r', 'b_rook.png'), False, 'EmptySquare.png')
+A8 = Square(0, 0, Color["light_blue"], False, Piece('b', 'r', black_rook_image), False, empty_square_image)
+B8 = Square(0, 1, Color["dark_blue"], False, Piece('b', 'n', black_knight_image), False, empty_square_image)
+C8 = Square(0, 2, Color["light_blue"], False, Piece('b', 'b', black_bishop_image), False, empty_square_image)
+D8 = Square(0, 3, Color["dark_blue"], False, Piece('b', 'q', black_queen_image), False, empty_square_image)
+E8 = Square(0, 4, Color["light_blue"], False, Piece('b', 'k', black_king_image), False, empty_square_image)
+F8 = Square(0, 5, Color["dark_blue"], False, Piece('b', 'b', black_bishop_image), False, empty_square_image)
+G8 = Square(0, 6, Color["light_blue"], False, Piece('b', 'n', black_knight_image), False, empty_square_image)
+H8 = Square(0, 7, Color["dark_blue"], False, Piece('b', 'r', black_rook_image), False, empty_square_image)
 
-A7 = Square(1, 0, Color["dark_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-B7 = Square(1, 1, Color["light_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-C7 = Square(1, 2, Color["dark_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-D7 = Square(1, 3, Color["light_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-E7 = Square(1, 4, Color["dark_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-F7 = Square(1, 5, Color["light_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-G7 = Square(1, 6, Color["dark_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-H7 = Square(1, 7, Color["light_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
+A7 = Square(1, 0, Color["dark_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+B7 = Square(1, 1, Color["light_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+C7 = Square(1, 2, Color["dark_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+D7 = Square(1, 3, Color["light_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+E7 = Square(1, 4, Color["dark_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+F7 = Square(1, 5, Color["light_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+G7 = Square(1, 6, Color["dark_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+H7 = Square(1, 7, Color["light_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
 
-A6 = Square(2, 0, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-B6 = Square(2, 1, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-C6 = Square(2, 2, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-D6 = Square(2, 3, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-E6 = Square(2, 4, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-F6 = Square(2, 5, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-G6 = Square(2, 6, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-H6 = Square(2, 7, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
+A6 = Square(2, 0, Color["light_blue"], False, Piece(), False, empty_square_image)
+B6 = Square(2, 1, Color["dark_blue"], False, Piece(), False, empty_square_image)
+C6 = Square(2, 2, Color["light_blue"], False, Piece(), False, empty_square_image)
+D6 = Square(2, 3, Color["dark_blue"], False, Piece(), False, empty_square_image)
+E6 = Square(2, 4, Color["light_blue"], False, Piece(), False, empty_square_image)
+F6 = Square(2, 5, Color["dark_blue"], False, Piece(), False, empty_square_image)
+G6 = Square(2, 6, Color["light_blue"], False, Piece(), False, empty_square_image)
+H6 = Square(2, 7, Color["dark_blue"], False, Piece(), False, empty_square_image)
 
-A5 = Square(3, 0, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-B5 = Square(3, 1, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-C5 = Square(3, 2, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-D5 = Square(3, 3, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-E5 = Square(3, 4, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-F5 = Square(3, 5, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-G5 = Square(3, 6, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-H5 = Square(3, 7, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
+A5 = Square(3, 0, Color["dark_blue"], False, Piece(), False, empty_square_image)
+B5 = Square(3, 1, Color["light_blue"], False, Piece(), False, empty_square_image)
+C5 = Square(3, 2, Color["dark_blue"], False, Piece(), False, empty_square_image)
+D5 = Square(3, 3, Color["light_blue"], False, Piece(), False, empty_square_image)
+E5 = Square(3, 4, Color["dark_blue"], False, Piece(), False, empty_square_image)
+F5 = Square(3, 5, Color["light_blue"], False, Piece(), False, empty_square_image)
+G5 = Square(3, 6, Color["dark_blue"], False, Piece(), False, empty_square_image)
+H5 = Square(3, 7, Color["light_blue"], False, Piece(), False, empty_square_image)
 
-A4 = Square(4, 0, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-B4 = Square(4, 1, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-C4 = Square(4, 2, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-D4 = Square(4, 3, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-E4 = Square(4, 4, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-F4 = Square(4, 5, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-G4 = Square(4, 6, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-H4 = Square(4, 7, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
+A4 = Square(4, 0, Color["light_blue"], False, Piece(), False, empty_square_image)
+B4 = Square(4, 1, Color["dark_blue"], False, Piece(), False, empty_square_image)
+C4 = Square(4, 2, Color["light_blue"], False, Piece(), False, empty_square_image)
+D4 = Square(4, 3, Color["dark_blue"], False, Piece(), False, empty_square_image)
+E4 = Square(4, 4, Color["light_blue"], False, Piece(), False, empty_square_image)
+F4 = Square(4, 5, Color["dark_blue"], False, Piece(), False, empty_square_image)
+G4 = Square(4, 6, Color["light_blue"], False, Piece(), False, empty_square_image)
+H4 = Square(4, 7, Color["dark_blue"], False, Piece(), False, empty_square_image)
 
-A3 = Square(5, 0, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-B3 = Square(5, 1, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-C3 = Square(5, 2, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-D3 = Square(5, 3, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-E3 = Square(5, 4, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-F3 = Square(5, 5, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-G3 = Square(5, 6, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-H3 = Square(5, 7, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
+A3 = Square(5, 0, Color["dark_blue"], False, Piece(), False, empty_square_image)
+B3 = Square(5, 1, Color["light_blue"], False, Piece(), False, empty_square_image)
+C3 = Square(5, 2, Color["dark_blue"], False, Piece(), False, empty_square_image)
+D3 = Square(5, 3, Color["light_blue"], False, Piece(), False, empty_square_image)
+E3 = Square(5, 4, Color["dark_blue"], False, Piece(), False, empty_square_image)
+F3 = Square(5, 5, Color["light_blue"], False, Piece(), False, empty_square_image)
+G3 = Square(5, 6, Color["dark_blue"], False, Piece(), False, empty_square_image)
+H3 = Square(5, 7, Color["light_blue"], False, Piece(), False, empty_square_image)
 
-A2 = Square(6, 0, Color["light_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-B2 = Square(6, 1, Color["dark_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-C2 = Square(6, 2, Color["light_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-D2 = Square(6, 3, Color["dark_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-E2 = Square(6, 4, Color["light_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-F2 = Square(6, 5, Color["dark_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-G2 = Square(6, 6, Color["light_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-H2 = Square(6, 7, Color["dark_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
+A2 = Square(6, 0, Color["light_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+B2 = Square(6, 1, Color["dark_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+C2 = Square(6, 2, Color["light_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+D2 = Square(6, 3, Color["dark_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+E2 = Square(6, 4, Color["light_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+F2 = Square(6, 5, Color["dark_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+G2 = Square(6, 6, Color["light_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+H2 = Square(6, 7, Color["dark_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
 
-A1 = Square(7, 0, Color["dark_blue"], False, Piece('w', 'r', 'w_rook.png'), False, 'EmptySquare.png')
-B1 = Square(7, 1, Color["light_blue"], False, Piece('w', 'n', 'w_knight.png'), False, 'EmptySquare.png')
-C1 = Square(7, 2, Color["dark_blue"], False, Piece('w', 'b', 'w_bishop.png'), False, 'EmptySquare.png')
-D1 = Square(7, 3, Color["light_blue"], False, Piece('w', 'q', 'w_queen.png'), False, 'EmptySquare.png')
-E1 = Square(7, 4, Color["dark_blue"], False, Piece('w', 'k', 'w_king.png'), False, 'EmptySquare.png')
-F1 = Square(7, 5, Color["light_blue"], False, Piece('w', 'b', 'w_bishop.png'), False, 'EmptySquare.png')
-G1 = Square(7, 6, Color["dark_blue"], False, Piece('w', 'n', 'w_knight.png'), False, 'EmptySquare.png')
-H1 = Square(7, 7, Color["light_blue"], False, Piece('w', 'r', 'w_rook.png'), False, 'EmptySquare.png')
+A1 = Square(7, 0, Color["dark_blue"], False, Piece('w', 'r', white_rook_image), False, empty_square_image)
+B1 = Square(7, 1, Color["light_blue"], False, Piece('w', 'n', white_knight_image), False, empty_square_image)
+C1 = Square(7, 2, Color["dark_blue"], False, Piece('w', 'b', white_bishop_image), False, empty_square_image)
+D1 = Square(7, 3, Color["light_blue"], False, Piece('w', 'q', white_queen_image), False, empty_square_image)
+E1 = Square(7, 4, Color["dark_blue"], False, Piece('w', 'k', white_king_image), False, empty_square_image)
+F1 = Square(7, 5, Color["light_blue"], False, Piece('w', 'b', white_bishop_image), False, empty_square_image)
+G1 = Square(7, 6, Color["dark_blue"], False, Piece('w', 'n', white_knight_image), False, empty_square_image)
+H1 = Square(7, 7, Color["light_blue"], False, Piece('w', 'r', white_rook_image), False, empty_square_image)
 
 # The board which is full of all the squares.
-Board = [[Square(0, 0, Color['light_blue'], False, Piece(), False, 'EmptySquare.png') for r in range(8)] for c in range(8)]
+Board = [[Square(0, 0, Color['light_blue'], False, Piece(), False, empty_square_image) for _ in range(8)] for __ in range(8)]
 
 # Variables for the squares which will be changed when the player is promoting a pawn.
 promote1, promote2, promote3 = Board[0][0].piece.image, Board[0][0].piece.image, Board[0][0].piece.image
@@ -172,77 +189,77 @@ def infinite_edge(inf_col):
 
 
 def reset_board():
-    Board[0][2] = Square(0, 2, Color["light_blue"], False, Piece('b', 'b', 'b_bishop.png'), False, 'EmptySquare.png')
-    Board[0][3] = Square(0, 3, Color["dark_blue"], False, Piece('b', 'q', 'b_queen.png'), False, 'EmptySquare.png')
-    Board[0][0] = Square(0, 0, Color["light_blue"], False, Piece('b', 'r', 'b_rook.png'), False, 'EmptySquare.png')
-    Board[0][4] = Square(0, 4, Color["light_blue"], False, Piece('b', 'k', 'b_king.png'), False, 'EmptySquare.png')
-    Board[0][5] = Square(0, 5, Color["dark_blue"], False, Piece('b', 'b', 'b_bishop.png'), False, 'EmptySquare.png')
-    Board[0][6] = Square(0, 6, Color["light_blue"], False, Piece('b', 'n', 'b_knight.png'), False, 'EmptySquare.png')
-    Board[0][7] = Square(0, 7, Color["dark_blue"], False, Piece('b', 'r', 'b_rook.png'), False, 'EmptySquare.png')
-    Board[0][1] = Square(0, 1, Color["dark_blue"], False, Piece('b', 'n', 'b_knight.png'), False, 'EmptySquare.png')
+    Board[0][2] = Square(0, 2, Color["light_blue"], False, Piece('b', 'b', black_bishop_image), False, empty_square_image)
+    Board[0][3] = Square(0, 3, Color["dark_blue"], False, Piece('b', 'q', black_queen_image), False, empty_square_image)
+    Board[0][0] = Square(0, 0, Color["light_blue"], False, Piece('b', 'r', black_rook_image), False, empty_square_image)
+    Board[0][4] = Square(0, 4, Color["light_blue"], False, Piece('b', 'k', black_king_image), False, empty_square_image)
+    Board[0][5] = Square(0, 5, Color["dark_blue"], False, Piece('b', 'b', black_bishop_image), False, empty_square_image)
+    Board[0][6] = Square(0, 6, Color["light_blue"], False, Piece('b', 'n', black_knight_image), False, empty_square_image)
+    Board[0][7] = Square(0, 7, Color["dark_blue"], False, Piece('b', 'r', black_rook_image), False, empty_square_image)
+    Board[0][1] = Square(0, 1, Color["dark_blue"], False, Piece('b', 'n', black_knight_image), False, empty_square_image)
 
-    Board[1][0] = Square(1, 0, Color["dark_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-    Board[1][1] = Square(1, 1, Color["light_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-    Board[1][2] = Square(1, 2, Color["dark_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-    Board[1][3] = Square(1, 3, Color["light_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-    Board[1][4] = Square(1, 4, Color["dark_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-    Board[1][5] = Square(1, 5, Color["light_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-    Board[1][6] = Square(1, 6, Color["dark_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
-    Board[1][7] = Square(1, 7, Color["light_blue"], False, Piece('b', 'p', 'b_pawn.png'), False, 'EmptySquare.png')
+    Board[1][0] = Square(1, 0, Color["dark_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+    Board[1][1] = Square(1, 1, Color["light_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+    Board[1][2] = Square(1, 2, Color["dark_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+    Board[1][3] = Square(1, 3, Color["light_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+    Board[1][4] = Square(1, 4, Color["dark_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+    Board[1][5] = Square(1, 5, Color["light_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+    Board[1][6] = Square(1, 6, Color["dark_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
+    Board[1][7] = Square(1, 7, Color["light_blue"], False, Piece('b', 'p', black_pawn_image), False, empty_square_image)
 
-    Board[2][0] = Square(2, 0, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[2][1] = Square(2, 1, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[2][2] = Square(2, 2, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[2][3] = Square(2, 3, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[2][4] = Square(2, 4, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[2][5] = Square(2, 5, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[2][6] = Square(2, 6, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[2][7] = Square(2, 7, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
+    Board[2][0] = Square(2, 0, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[2][1] = Square(2, 1, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[2][2] = Square(2, 2, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[2][3] = Square(2, 3, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[2][4] = Square(2, 4, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[2][5] = Square(2, 5, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[2][6] = Square(2, 6, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[2][7] = Square(2, 7, Color["dark_blue"], False, Piece(), False, empty_square_image)
 
-    Board[3][0] = Square(3, 0, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[3][1] = Square(3, 1, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[3][2] = Square(3, 2, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[3][3] = Square(3, 3, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[3][4] = Square(3, 4, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[3][5] = Square(3, 5, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[3][6] = Square(3, 6, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[3][7] = Square(3, 7, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
+    Board[3][0] = Square(3, 0, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[3][1] = Square(3, 1, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[3][2] = Square(3, 2, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[3][3] = Square(3, 3, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[3][4] = Square(3, 4, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[3][5] = Square(3, 5, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[3][6] = Square(3, 6, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[3][7] = Square(3, 7, Color["light_blue"], False, Piece(), False, empty_square_image)
 
-    Board[4][0] = Square(4, 0, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[4][1] = Square(4, 1, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[4][2] = Square(4, 2, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[4][3] = Square(4, 3, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[4][4] = Square(4, 4, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[4][5] = Square(4, 5, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[4][6] = Square(4, 6, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[4][7] = Square(4, 7, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
+    Board[4][0] = Square(4, 0, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[4][1] = Square(4, 1, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[4][2] = Square(4, 2, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[4][3] = Square(4, 3, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[4][4] = Square(4, 4, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[4][5] = Square(4, 5, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[4][6] = Square(4, 6, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[4][7] = Square(4, 7, Color["dark_blue"], False, Piece(), False, empty_square_image)
 
-    Board[5][0] = Square(5, 0, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[5][1] = Square(5, 1, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[5][2] = Square(5, 2, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[5][3] = Square(5, 3, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[5][4] = Square(5, 4, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[5][5] = Square(5, 5, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[5][6] = Square(5, 6, Color["dark_blue"], False, Piece(), False, 'EmptySquare.png')
-    Board[5][7] = Square(5, 7, Color["light_blue"], False, Piece(), False, 'EmptySquare.png')
+    Board[5][0] = Square(5, 0, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[5][1] = Square(5, 1, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[5][2] = Square(5, 2, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[5][3] = Square(5, 3, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[5][4] = Square(5, 4, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[5][5] = Square(5, 5, Color["light_blue"], False, Piece(), False, empty_square_image)
+    Board[5][6] = Square(5, 6, Color["dark_blue"], False, Piece(), False, empty_square_image)
+    Board[5][7] = Square(5, 7, Color["light_blue"], False, Piece(), False, empty_square_image)
 
-    Board[6][0] = Square(6, 0, Color["light_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-    Board[6][1] = Square(6, 1, Color["dark_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-    Board[6][2] = Square(6, 2, Color["light_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-    Board[6][3] = Square(6, 3, Color["dark_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-    Board[6][4] = Square(6, 4, Color["light_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-    Board[6][5] = Square(6, 5, Color["dark_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-    Board[6][6] = Square(6, 6, Color["light_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
-    Board[6][7] = Square(6, 7, Color["dark_blue"], False, Piece('w', 'p', 'w_pawn.png'), False, 'EmptySquare.png')
+    Board[6][0] = Square(6, 0, Color["light_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+    Board[6][1] = Square(6, 1, Color["dark_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+    Board[6][2] = Square(6, 2, Color["light_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+    Board[6][3] = Square(6, 3, Color["dark_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+    Board[6][4] = Square(6, 4, Color["light_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+    Board[6][5] = Square(6, 5, Color["dark_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+    Board[6][6] = Square(6, 6, Color["light_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
+    Board[6][7] = Square(6, 7, Color["dark_blue"], False, Piece('w', 'p', white_pawn_image), False, empty_square_image)
 
-    Board[7][0] = Square(7, 0, Color["dark_blue"], False, Piece('w', 'r', 'w_rook.png'), False, 'EmptySquare.png')
-    Board[7][1] = Square(7, 1, Color["light_blue"], False, Piece('w', 'n', 'w_knight.png'), False, 'EmptySquare.png')
-    Board[7][2] = Square(7, 2, Color["dark_blue"], False, Piece('w', 'b', 'w_bishop.png'), False, 'EmptySquare.png')
-    Board[7][3] = Square(7, 3, Color["light_blue"], False, Piece('w', 'q', 'w_queen.png'), False, 'EmptySquare.png')
-    Board[7][4] = Square(7, 4, Color["dark_blue"], False, Piece('w', 'k', 'w_king.png'), False, 'EmptySquare.png')
-    Board[7][5] = Square(7, 5, Color["light_blue"], False, Piece('w', 'b', 'w_bishop.png'), False, 'EmptySquare.png')
-    Board[7][6] = Square(7, 6, Color["dark_blue"], False, Piece('w', 'n', 'w_knight.png'), False, 'EmptySquare.png')
-    Board[7][7] = Square(7, 7, Color["light_blue"], False, Piece('w', 'r', 'w_rook.png'), False, 'EmptySquare.png')
+    Board[7][0] = Square(7, 0, Color["dark_blue"], False, Piece('w', 'r', white_rook_image), False, empty_square_image)
+    Board[7][1] = Square(7, 1, Color["light_blue"], False, Piece('w', 'n', white_knight_image), False, empty_square_image)
+    Board[7][2] = Square(7, 2, Color["dark_blue"], False, Piece('w', 'b', white_bishop_image), False, empty_square_image)
+    Board[7][3] = Square(7, 3, Color["light_blue"], False, Piece('w', 'q', white_queen_image), False, empty_square_image)
+    Board[7][4] = Square(7, 4, Color["dark_blue"], False, Piece('w', 'k', white_king_image), False, empty_square_image)
+    Board[7][5] = Square(7, 5, Color["light_blue"], False, Piece('w', 'b', white_bishop_image), False, empty_square_image)
+    Board[7][6] = Square(7, 6, Color["dark_blue"], False, Piece('w', 'n', white_knight_image), False, empty_square_image)
+    Board[7][7] = Square(7, 7, Color["light_blue"], False, Piece('w', 'r', white_rook_image), False, empty_square_image)
 
 
 def fill_board():
@@ -448,11 +465,11 @@ def en_passant(rows, cols):
 
     # Resets the square that the piece moved from and adds the piece to its new square.
     Board[chosenRow][chosenCol].bgn_colour = chosen_colour
-    Board[chosenRow][chosenCol].piece = Piece('None', 'None', 'EmptySquare.png', False)
+    Board[chosenRow][chosenCol].piece = Piece('None', 'None', empty_square_image, False)
     Board[rows][cols].piece = chosenPiece
 
     # Takes away the piece that was captured.
-    Board[rows + verMult][cols].piece = Piece('None', 'None', 'EmptySquare.png', False)
+    Board[rows + verMult][cols].piece = Piece('None', 'None', empty_square_image, False)
 
     global white_turn, choosing_piece
     white_turn = not white_turn
@@ -662,11 +679,11 @@ def castling(rows, cols):
 
         # Resets the spot they moved from to a blank square, and puts it in its new spot.
         Board[chosenRow][chosenCol].bgn_colour = chosen_colour
-        Board[chosenRow][chosenCol].piece = Piece('None', 'None', 'EmptySquare.png', False)
+        Board[chosenRow][chosenCol].piece = Piece('None', 'None', empty_square_image, False)
         Board[rows][cols].piece = chosenPiece
 
         # Resets the spot the rook moved from to a blank square, and puts it in its new spot.
-        Board[7][7].piece = Piece('None', 'None', 'EmptySquare.png', False)
+        Board[7][7].piece = Piece('None', 'None', empty_square_image, False)
         Board[7][5].piece = rook_piece
 
         # Shows that they moved.
@@ -680,11 +697,11 @@ def castling(rows, cols):
 
         # Resets the spot they moved from to a blank square, and puts it in its new spot.
         Board[chosenRow][chosenCol].bgn_colour = chosen_colour
-        Board[chosenRow][chosenCol].piece = Piece('None', 'None', 'EmptySquare.png', False)
+        Board[chosenRow][chosenCol].piece = Piece('None', 'None', empty_square_image, False)
         Board[rows][cols].piece = chosenPiece
 
         # Resets the spot the rook moved from to a blank square, and puts it in its new spot.
-        Board[7][0].piece = Piece('None', 'None', 'EmptySquare.png', False)
+        Board[7][0].piece = Piece('None', 'None', empty_square_image, False)
         Board[7][3].piece = rook_piece
 
         # Shows that they moved.
@@ -698,11 +715,11 @@ def castling(rows, cols):
 
         # Resets the spot they moved from to a blank square, and puts it in its new spot.
         Board[chosenRow][chosenCol].bgn_colour = chosen_colour
-        Board[chosenRow][chosenCol].piece = Piece('None', 'None', 'EmptySquare.png', False)
+        Board[chosenRow][chosenCol].piece = Piece('None', 'None', empty_square_image, False)
         Board[rows][cols].piece = chosenPiece
 
         # Resets the spot the rook moved from to a blank square, and puts it in its new spot.
-        Board[0][0].piece = Piece('None', 'None', 'EmptySquare.png', False)
+        Board[0][0].piece = Piece('None', 'None', empty_square_image, False)
         Board[0][3].piece = rook_piece
 
         # Shows that they moved.
@@ -716,11 +733,11 @@ def castling(rows, cols):
 
         # Resets the spot they moved from to a blank square, and puts it in its new spot.
         Board[chosenRow][chosenCol].bgn_colour = chosen_colour
-        Board[chosenRow][chosenCol].piece = Piece('None', 'None', 'EmptySquare.png', False)
+        Board[chosenRow][chosenCol].piece = Piece('None', 'None', empty_square_image, False)
         Board[rows][cols].piece = chosenPiece
 
         # Resets the spot the rook moved from to a blank square, and puts it in its new spot.
-        Board[0][7].piece = Piece('None', 'None', 'EmptySquare.png', False)
+        Board[0][7].piece = Piece('None', 'None', empty_square_image, False)
         Board[0][5].piece = rook_piece
 
         # Shows that they moved.
@@ -1184,7 +1201,7 @@ def move_piece(rows, cols):
 
         # Resets the spot they moved from to a blank square, and puts it in its new spot.
         Board[chosenRow][chosenCol].bgn_colour = chosen_colour
-        Board[chosenRow][chosenCol].piece = Piece('None', 'None', 'EmptySquare.png', False)
+        Board[chosenRow][chosenCol].piece = Piece('None', 'None', empty_square_image, False)
         Board[rows][cols].piece = chosenPiece
 
         # Changes who's move it is, and resets variables.
@@ -1292,10 +1309,10 @@ def show_promote_pawn(rows, cols):
         promote3 = Board[rows + 3][cols].piece
 
         # Replaces the pieces at the current row and 3 below it with the options that the user has for promotion.
-        Board[rows][cols].piece = Piece('w', 'q', 'w_queen.png', False)
-        Board[rows + 1][cols].piece = Piece('w', 'r', 'w_rook.png', False)
-        Board[rows + 2][cols].piece = Piece('w', 'b', 'w_bishop.png', False)
-        Board[rows + 3][cols].piece = Piece('w', 'n', 'w_knight.png', False)
+        Board[rows][cols].piece = Piece('w', 'q', white_queen_image, False)
+        Board[rows + 1][cols].piece = Piece('w', 'r', white_rook_image, False)
+        Board[rows + 2][cols].piece = Piece('w', 'b', white_bishop_image, False)
+        Board[rows + 3][cols].piece = Piece('w', 'n', white_knight_image, False)
 
         # Change the background colour of the possible promotion pieces.
         Board[rows][cols].bgn_colour = Color['white']
@@ -1311,10 +1328,10 @@ def show_promote_pawn(rows, cols):
         promote3 = Board[rows - 3][cols].piece
 
         # Replaces the pieces at the current row and 3 below it with the options that the user has for promotion.
-        Board[rows][cols].piece = Piece('b', 'q', 'b_queen.png', False)
-        Board[rows - 1][cols].piece = Piece('b', 'r', 'b_rook.png', False)
-        Board[rows - 2][cols].piece = Piece('b', 'b', 'b_bishop.png', False)
-        Board[rows - 3][cols].piece = Piece('b', 'n', 'b_knight.png', False)
+        Board[rows][cols].piece = Piece('b', 'q', black_queen_image, False)
+        Board[rows - 1][cols].piece = Piece('b', 'r', black_rook_image, False)
+        Board[rows - 2][cols].piece = Piece('b', 'b', black_bishop_image, False)
+        Board[rows - 3][cols].piece = Piece('b', 'n', black_knight_image, False)
 
         # Change the background colour of the possible promotion pieces.
         Board[rows][cols].bgn_colour = Color['white']
@@ -1409,7 +1426,7 @@ def will_not_check(rows, cols):
     white = is_white(chosenRow, chosenCol)
 
     # Resets the spot they moved from to a blank square.
-    Board[chosenRow][chosenCol].piece = Piece('None', 'None', 'EmptySquare.png', False)
+    Board[chosenRow][chosenCol].piece = Piece('None', 'None', empty_square_image, False)
 
     # Saves the info of the piece being replaced, and then replaces it.
     check_piece = Board[rows][cols].piece
